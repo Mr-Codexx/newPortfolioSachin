@@ -23,7 +23,6 @@ import {
   ModalCloseButton,
   SimpleGrid,
   useDisclosure,
-  useMediaQuery,
   Skeleton,
   SkeletonCircle,
   SkeletonText,
@@ -66,11 +65,8 @@ const MotionHStack = motion(HStack);
 const HeroSection = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { colorMode, toggleColorMode } = useColorMode();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState("default");
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-  // Color Palette State
   const [primaryColor, setPrimaryColor] = useState("blue");
   const [secondaryColor, setSecondaryColor] = useState("teal");
   const [accentColor, setAccentColor] = useState("purple");
@@ -78,7 +74,6 @@ const HeroSection = () => {
   const { isOpen: isSettingsOpen, onOpen: onSettingsOpen, onClose: onSettingsClose } = useDisclosure();
   const { isOpen: isHireMeOpen, onOpen: onHireMeOpen, onClose: onHireMeClose } = useDisclosure();
 
-  // Enhanced color palettes with 12 options
   const colorPalettes = [
     {
       name: "Ocean Blue",
@@ -166,7 +161,6 @@ const HeroSection = () => {
     },
   ];
 
-  // Load settings from localStorage
   useEffect(() => {
     const savedPrimaryColor = localStorage.getItem('primaryColor');
     const savedSecondaryColor = localStorage.getItem('secondaryColor');
@@ -177,25 +171,11 @@ const HeroSection = () => {
     if (savedAccentColor) setAccentColor(savedAccentColor);
   }, []);
 
-  // Save settings
   useEffect(() => {
     localStorage.setItem('primaryColor', primaryColor);
     localStorage.setItem('secondaryColor', secondaryColor);
     localStorage.setItem('accentColor', accentColor);
   }, [primaryColor, secondaryColor, accentColor]);
-
-  // Mouse movement and cursor effects
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   const gradientShift = keyframes`
     0% { background-position: 0% 50%; }
@@ -203,17 +183,14 @@ const HeroSection = () => {
     100% { background-position: 0% 50%; }
   `;
 
-  // Icon mapping
   const iconMap = {
     FaDribbble, FaBehance, FaInstagram, FaYoutube, FaLinkedinIn, FaTwitter, FaFacebookF
   };
 
-  // Get current palette
   const currentPalette = colorPalettes.find(palette =>
     palette.primary === primaryColor && palette.secondary === secondaryColor
   ) || colorPalettes[0];
 
-  // Skeleton preview component for color palettes
   const PaletteSkeletonPreview = ({ palette, isSelected }) => (
     <Box
       p={3}
@@ -225,7 +202,6 @@ const HeroSection = () => {
       _hover={{ transform: "translateY(-2px)", shadow: "md" }}
       transition="all 0.2s"
     >
-      {/* Gradient Preview */}
       <Box
         h="60px"
         borderRadius="md"
@@ -234,7 +210,6 @@ const HeroSection = () => {
         position="relative"
         overflow="hidden"
       >
-        {/* Animated shimmer effect */}
         <Box
           position="absolute"
           top={0}
@@ -249,7 +224,6 @@ const HeroSection = () => {
         />
       </Box>
 
-      {/* Skeleton UI Preview */}
       <VStack spacing={2} align="start">
         <Skeleton height="12px" width="70%" borderRadius="full" startColor={`${palette.primary}.200`} endColor={`${palette.primary}.400`} />
         <Skeleton height="8px" width="90%" borderRadius="full" startColor={`${palette.secondary}.200`} endColor={`${palette.secondary}.400`} />
@@ -263,7 +237,6 @@ const HeroSection = () => {
         </HStack>
       </VStack>
 
-      {/* Palette Name */}
       <Text
         fontSize="xs"
         fontWeight="medium"
@@ -279,60 +252,8 @@ const HeroSection = () => {
     </Box>
   );
 
-  // Custom cursor component
-  const CustomCursor = () => (
-    <>
-      {/* Main cursor */}
-      <MotionBox
-        position="fixed"
-        top={0}
-        left={0}
-        w="20px"
-        h="20px"
-        borderRadius="full"
-        bg={`${primaryColor}.500`}
-        pointerEvents="none"
-        zIndex={9999}
-        style={{
-          x: mousePosition.x - 10,
-          y: mousePosition.y - 10,
-        }}
-        animate={{
-          scale: cursorVariant === "hover" ? 1.5 : 1,
-        }}
-        transition={{ type: "spring", stiffness: 500, damping: 28 }}
-      />
-
-      {/* Outer ring */}
-      <MotionBox
-        position="fixed"
-        top={0}
-        left={0}
-        w="40px"
-        h="40px"
-        borderRadius="full"
-        border="2px solid"
-        borderColor={`${secondaryColor}.500`}
-        pointerEvents="none"
-        zIndex={9998}
-        style={{
-          x: mousePosition.x - 20,
-          y: mousePosition.y - 20,
-        }}
-        animate={{
-          scale: cursorVariant === "hover" ? 1.2 : 1,
-        }}
-        transition={{ type: "spring", stiffness: 400, damping: 30, delay: 0.1 }}
-      />
-    </>
-  );
-
   return (
     <>
-      {/* Custom Cursor */}
-      <CustomCursor />
-
-      {/* Settings Button */}
       <MotionBox
         position="fixed"
         bottom="20px"
@@ -341,8 +262,6 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        onMouseEnter={() => setCursorVariant("hover")}
-        onMouseLeave={() => setCursorVariant("default")}
       >
         <Tooltip label="Theme Settings">
           <IconButton
@@ -362,7 +281,6 @@ const HeroSection = () => {
         </Tooltip>
       </MotionBox>
 
-      {/* Settings Modal */}
       <Modal isOpen={isSettingsOpen} onClose={onSettingsClose} size="lg" isCentered>
         <ModalOverlay />
         <ModalContent
@@ -404,8 +322,6 @@ const HeroSection = () => {
                         setSecondaryColor(palette.secondary);
                         setAccentColor(palette.accent);
                       }}
-                      onMouseEnter={() => setCursorVariant("hover")}
-                      onMouseLeave={() => setCursorVariant("default")}
                     >
                       <PaletteSkeletonPreview
                         palette={palette}
@@ -444,7 +360,6 @@ const HeroSection = () => {
         </ModalContent>
       </Modal>
 
-      {/* Hire Me Modal */}
       <HireMeModal
         isOpen={isHireMeOpen}
         onClose={onHireMeClose}
@@ -453,7 +368,6 @@ const HeroSection = () => {
         accentColor={accentColor}
       />
 
-      {/* Main Hero Section */}
       <Box
         position="relative"
         bg={colorMode === "light" ? "white" : "gray.900"}
@@ -462,9 +376,7 @@ const HeroSection = () => {
         flexDirection="column"
         justifyContent="center"
         overflow="hidden"
-        onMouseEnter={() => setCursorVariant("default")}
       >
-        {/* Background with dynamic gradient */}
         <Box
           position="absolute"
           top="0"
@@ -481,7 +393,6 @@ const HeroSection = () => {
           opacity={0.7}
         />
 
-        {/* Animated background elements */}
         <MotionBox
           position="absolute"
           top="10%"
@@ -508,7 +419,6 @@ const HeroSection = () => {
           zIndex={2}
           py={8}
         >
-          {/* Header */}
           <MotionFlex
             justify="space-between"
             align="center"
@@ -517,7 +427,6 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Logo */}
             <Flex align="center">
               <Text
                 fontWeight="bold"
@@ -539,12 +448,11 @@ const HeroSection = () => {
             </Flex><Flex
               as="nav"
               w="100%"
-              justify="space-between" // places nav items and button at opposite ends
+              justify="space-between"
               align="center"
               py={2}
-              px={6} // optional padding for spacing
+              px={6}
             >
-              {/* Centered Nav Section */}
               <Flex flex="1" justify="center">
                 <HStack spacing={4}>
                   <NavItem
@@ -555,7 +463,6 @@ const HeroSection = () => {
                 </HStack>
               </Flex>
 
-              {/* Right-Aligned Hire Me Button */}
               <Button
                 bg={`${primaryColor}.500`}
                 color="white"
@@ -568,8 +475,6 @@ const HeroSection = () => {
                   transform: "translateY(-1px)",
                 }}
                 transition="all 0.2s"
-                onMouseEnter={() => setCursorVariant("hover")}
-                onMouseLeave={() => setCursorVariant("default")}
               >
                 {portfolioData.buttons.hireMe}
               </Button>
@@ -577,14 +482,12 @@ const HeroSection = () => {
 
           </MotionFlex>
 
-          {/* Hero Content */}
           <Flex
             direction={{ base: "column", lg: "row" }}
             align="center"
             justify="space-between"
             gap={8}
           >
-            {/* Text Section */}
             <VStack
               align={{ base: "center", lg: "flex-start" }}
               textAlign={{ base: "center", lg: "left" }}
@@ -599,7 +502,6 @@ const HeroSection = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
               >
-                {/* Main Heading */}
                 <Box>
                   <Text
                     fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
@@ -618,7 +520,6 @@ const HeroSection = () => {
                   </Text>
                 </Box>
 
-                {/* Subtitle */}
                 <Text
                   fontSize={{ base: "lg", md: "xl" }}
                   fontWeight="medium"
@@ -631,7 +532,6 @@ const HeroSection = () => {
                   />
                 </Text>
 
-                {/* Description */}
                 <Text
                   color={colorMode === "light" ? "gray.600" : "gray.400"}
                   fontSize={{ base: "sm", md: "md" }}
@@ -641,7 +541,6 @@ const HeroSection = () => {
                   {portfolioData.personalInfo.description}
                 </Text>
 
-                {/* Stats */}
                 <HStack
                   spacing={6}
                   pt={2}
@@ -653,8 +552,6 @@ const HeroSection = () => {
                       key={stat.label}
                       align="center"
                       spacing={0}
-                      onMouseEnter={() => setCursorVariant("hover")}
-                      onMouseLeave={() => setCursorVariant("default")}
                     >
                       <Text
                         fontSize={{ base: "xl", md: "2xl" }}
@@ -674,7 +571,6 @@ const HeroSection = () => {
                 </HStack>
               </MotionVStack>
 
-              {/* Action Buttons */}
               <MotionHStack
                 spacing={4}
                 pt={2}
@@ -697,12 +593,9 @@ const HeroSection = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsResumeOpen(true)}
-                  onMouseEnter={() => setCursorVariant("hover")}
-                  onMouseLeave={() => setCursorVariant("default")}
                 >
                   {portfolioData.buttons.downloadCV}
                 </MotionButton>
-
 
                 <Button
                   variant="outline"
@@ -713,13 +606,10 @@ const HeroSection = () => {
                     transform: "translateY(-1px)",
                   }}
                   transition="all 0.2s"
-                  onMouseEnter={() => setCursorVariant("hover")}
-                  onMouseLeave={() => setCursorVariant("default")}
                 >
                   {portfolioData.buttons.watchReel}
                 </Button>
 
-                {/* Mobile Hire Me Button */}
                 <Button
                   bg={`${accentColor}.500`}
                   color="white"
@@ -729,14 +619,11 @@ const HeroSection = () => {
                   _hover={{
                     bg: `${accentColor}.600`,
                   }}
-                  onMouseEnter={() => setCursorVariant("hover")}
-                  onMouseLeave={() => setCursorVariant("default")}
                 >
                   {portfolioData.buttons.hireMe}
                 </Button>
               </MotionHStack>
 
-              {/* Social Links */}
               <VStack spacing={3} pt={4}>
                 <Text
                   fontSize="xs"
@@ -768,8 +655,6 @@ const HeroSection = () => {
                             transform: "scale(1.1)",
                           }}
                           transition="all 0.2s"
-                          onMouseEnter={() => setCursorVariant("hover")}
-                          onMouseLeave={() => setCursorVariant("default")}
                         >
                           <Icon as={SocialIcon} boxSize={3} />
                         </Box>
@@ -780,7 +665,6 @@ const HeroSection = () => {
               </VStack>
             </VStack>
 
-            {/* Hero Image */}
             <MotionBox
               flex={1}
               position="relative"
@@ -788,15 +672,11 @@ const HeroSection = () => {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              onMouseEnter={() => setCursorVariant("hover")}
-              onMouseLeave={() => setCursorVariant("default")}
             >
               <AspectRatio ratio={4 / 5} maxW="100%">
                 <Box
                   position="relative"
-
                   overflow="hidden"
-
                   _hover={{
                     borderColor: `${secondaryColor}.300`,
                     transform: "scale(1.02)",
@@ -804,7 +684,6 @@ const HeroSection = () => {
                   transition="all 0.3s"
                 >
                   <Image
-                    // src={portfolioData.personalInfo.image}
                     src="./img.png"
                     alt={portfolioData.personalInfo.name}
                     objectFit="cover"
@@ -825,7 +704,6 @@ const HeroSection = () => {
             accentColor={accentColor}
           />
 
-          {/* Scroll Indicator */}
           <MotionBox
             position="absolute"
             bottom="20px"
@@ -856,7 +734,6 @@ const HeroSection = () => {
   );
 };
 
-// Motion components
 const MotionButton = motion(Button);
 const MotionVStack = motion(VStack);
 
