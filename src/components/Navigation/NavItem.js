@@ -101,7 +101,7 @@ const NavItem = ({ primaryColor = "teal" }) => {
   // Render the appropriate component
   const renderComponent = () => {
     const componentProps = { primaryColor, colorMode };
-    
+
     switch (currentComponent) {
       case "About":
         return <About {...componentProps} />;
@@ -170,12 +170,12 @@ const NavItem = ({ primaryColor = "teal" }) => {
           size={{ base: "sm", md: "md" }}
           aria-label="Navigation menu"
         />
-        <MenuList 
+        <MenuList
           bg={colorMode === "light" ? "white" : "gray.800"}
           borderColor={colorMode === "light" ? "gray.200" : "gray.600"}
         >
           {navItems.map((item) => (
-            <MenuItem 
+            <MenuItem
               key={item.label}
               onClick={() => handleMobileNavClick(item.label)}
               _hover={{
@@ -191,6 +191,7 @@ const NavItem = ({ primaryColor = "teal" }) => {
       </Menu>
 
       {/* Fullscreen Component Modal */}
+      {/* Fullscreen Component Modal */}
       <AnimatePresence>
         {isOpen && (
           <Modal
@@ -201,11 +202,8 @@ const NavItem = ({ primaryColor = "teal" }) => {
             motionPreset="none"
             blockScrollOnMount={true}
           >
-            <ModalOverlay 
-              bg="blackAlpha.600"
-              backdropFilter="blur(4px)"
-            />
-            
+            <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(4px)" />
+
             <MotionModalContent
               variants={modalVariants}
               initial="hidden"
@@ -213,64 +211,44 @@ const NavItem = ({ primaryColor = "teal" }) => {
               exit="exit"
               position="fixed"
               top={0}
+              left={0}
               right={0}
               bottom={0}
-              margin={0}
-              maxW="100vw"
-              maxH="100vh"
               w="100vw"
               h="100vh"
+              m={0}
+              p={0}
               bg={colorMode === "light" ? "white" : "gray.900"}
-              boxShadow="xl"
-              display="flex"
-              flexDirection="column"
               overflow="hidden"
             >
-              {/* Header with Close Button and Title */}
-              <Box
+              {/* Close Button (floating in top-right corner) */}
+              <IconButton
+                aria-label="Close modal"
+                icon={<CloseIcon />}
+                onClick={handleClose}
+                variant="ghost"
+                borderRadius="full"
+                size="lg"
                 position="absolute"
                 top={4}
                 right={4}
-                left={4}
                 zIndex={10}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                bg={colorMode === "light" ? "white" : "gray.900"}
-                p={4}
-                borderRadius="lg"
-                boxShadow="sm"
-              >
-                <Text
-                  fontSize="2xl"
-                  fontWeight="bold"
-                  color={colorMode === "light" ? "gray.800" : "white"}
-                >
-                  {currentComponent}
-                </Text>
-                <IconButton
-                  aria-label="Close modal"
-                  icon={<CloseIcon />}
-                  onClick={handleClose}
-                  variant="ghost"
-                  borderRadius="full"
-                  size="lg"
-                  color={colorMode === "light" ? "gray.600" : "gray.300"}
-                  _hover={{
-                    bg: colorMode === "light" ? "gray.100" : "gray.700",
-                    color: primaryHex,
-                    transform: "scale(1.1)",
-                  }}
-                  transition="all 0.2s"
-                />
-              </Box>
+                color={colorMode === "light" ? "gray.600" : "gray.300"}
+                _hover={{
+                  bg: colorMode === "light" ? "gray.100" : "gray.700",
+                  color: primaryHex,
+                  transform: "scale(1.1)",
+                }}
+                transition="all 0.2s"
+              />
 
-              {/* Component Content Area */}
+              {/* Fullscreen Body Content */}
               <Box
-                flex="1"
-                mt="80px"
-                p={6}
+                w="100%"
+                h="100%"
                 overflowY="auto"
+                display="flex"
+                flexDirection="column"
               >
                 {renderComponent()}
               </Box>
@@ -278,6 +256,7 @@ const NavItem = ({ primaryColor = "teal" }) => {
           </Modal>
         )}
       </AnimatePresence>
+
     </div>
   );
 };
