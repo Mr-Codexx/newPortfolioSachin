@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#3182CE" />
+  <meta name="description" content="Advanced Portfolio - Creative Developer & Designer" />
+  <meta name="keywords" content="portfolio, developer, designer, react, chakra ui, web development" />
+  <meta name="author" content="Your Name" />
+  <meta property="og:title" content="Advanced Portfolio - Creative Developer" />
+  <meta property="og:description" content="Showcasing innovative web development projects and creative solutions" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://i.pinimg.com/564x/3c/fa/12/3cfa1280ad3858b935aad427b2b47aa4.jpg" />
+  
+  <link rel="icon" href="https://i.pinimg.com/564x/3c/fa/12/3cfa1280ad3858b935aad427b2b47aa4.jpg" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+  <!-- Preconnect and Preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Critical CSS -->
+  <style>
+    * {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+}
+    body {
+      margin: 0;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #0f172a;
+      color: #e2e8f0;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    #root {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Loading animation */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #3182CE;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  
+  <title>Advanced Portfolio - Creative Developer</title>
+</head>
+<body>
+  <noscript>
+    <div style="padding: 2rem; text-align: center; background: #f8d7da; color: #721c24;">
+      <h1 style="font-size: 1.5rem;">JavaScript is disabled</h1>
+      <p>This application requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+    </div>
+  </noscript>
+  
+  <div id="root">
+    <div class="page-loader">
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+  
+  <script>
+    // Remove loader when React app loads
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        const loader = document.querySelector('.page-loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "short_name": "Portfolio Pro",
+  "name": "Advanced Portfolio - Creative Developer",
+  "description": "A cutting-edge portfolio showcasing innovative web development projects and creative solutions",
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "minimal-ui",
+    "window-controls-overlay"
+  ],
+  "theme_color": "#3182CE",
+  "background_color": "#0f172a",
+  "icons": [
+    {
+      "src": "https://i.pinimg.com/564x/3c/fa/12/3cfa1280ad3858b935aad427b2b47aa4.jpg",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "logo192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://i.pinimg.com/564x/3c/fa/12/3cfa1280ad3858b935aad427b2b47aa4.jpg",
+      "sizes": "1080x1920",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "https://i.pinimg.com/564x/3c/fa/12/3cfa1280ad3858b935aad427b2b47aa4.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": [
+    "productivity",
+    "business",
+    "portfolio",
+    "design"
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "View Projects",
+      "short_name": "Projects",
+      "description": "Browse my latest projects and work",
+      "url": "/projects",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contact Me",
+      "short_name": "Contact",
+      "description": "Get in touch with me",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

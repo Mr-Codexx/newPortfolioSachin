@@ -1,0 +1,195 @@
+{
+  "personalInfo": {
+    "name": "Sachin Sharma",
+    "title": [
+  { "text": "Software Engineer", "color": "blue" },
+  { "text": "Automation QA Engineer", "color": "teal" },
+  { "text": "React Developer", "color": "purple" }
+],
+ "description": "I’m an enthusiastic software engineer passionate about building efficient automation frameworks and elegant front-end web applications. Skilled in Selenium (Java), ReactJS, and Firebase, I focus on creating scalable, maintainable, and visually appealing solutions that simplify complex workflows.",
+    "image": "https://codegenweb.github.io/Lenna-Portfolio-site/images/lena-img.png",
+    "logo": "SS",
+    "tagline": "SDE",
+    "email": "sachin.sharma.dev@gmail.com",
+    "phone": "+91 98765 43210",
+    "location": "Pune, India",
+    "website": "https://sachinsharma.dev",
+    "availability": "Open for Automation & Frontend Development Opportunities"
+  },
+
+  "stats": [
+    { "number": "3+", "label": "Years of Experience" },
+    { "number": "20+", "label": "Automation Frameworks Delivered" },
+    { "number": "10+", "label": "Web Projects Built" },
+    { "number": "45+", "label": "Happy Clients & Teams Served" }
+  ],
+
+  "socialLinks": [
+    { "icon": "FaLinkedinIn", "color": "linkedin.500", "label": "LinkedIn", "url": "https://linkedin.com/in/sachinsharma-dev" },
+    { "icon": "FaGithub", "color": "gray.800", "label": "GitHub", "url": "https://github.com/sachinsharma-dev" },
+    { "icon": "FaYoutube", "color": "red.500", "label": "YouTube", "url": "https://www.youtube.com/@sachinsharma-dev" },
+    { "icon": "FaInstagram", "color": "pink.500", "label": "Instagram", "url": "https://instagram.com/sachinsharma.dev" }
+  ],
+
+  "floatingElements": [
+    { "text": "🏆 Best Automation Contributor - 2024", "position": "top-right" },
+    { "icon": "FaReact", "position": "bottom-left" }
+  ],
+
+  "colorPalettes": [
+    { "primary": "blue.500", "secondary": "cyan.400", "name": "Oceanic" },
+    { "primary": "purple.500", "secondary": "pink.400", "name": "Sunset" },
+    { "primary": "green.500", "secondary": "teal.400", "name": "Emerald" },
+    { "primary": "orange.500", "secondary": "yellow.400", "name": "Bright Pulse" }
+  ],
+
+  "buttons": {
+    "hireMe": "Hire Me",
+    "downloadCV": "Download CV",
+    "watchReel": "Watch Demo",
+    "viewPortfolio": "View Projects"
+  },
+
+  "skills": {
+    "automation": [
+      "Selenium WebDriver",
+      "TestNG",
+      "Java",
+      "Extent Reports",
+      "Maven",
+      "JIRA Integration",
+      "Excel Data-Driven Testing",
+      "Custom Contract Validation",
+      "Postman API Testing"
+    ],
+    "frontend": [
+      "HTML5",
+      "CSS3",
+      "JavaScript (ES6+)",
+      "ReactJS",
+      "Next.js",
+      "Chakra UI",
+      "Framer Motion",
+      "Firebase Authentication",
+      "Firestore & Realtime Database"
+    ],
+    "tools": [
+      "Git & GitHub",
+      "VS Code",
+      "IntelliJ IDEA",
+      "Postman",
+      "JIRA",
+      "Confluence",
+      "Figma"
+    ],
+    "softSkills": [
+      "Analytical Thinking",
+      "Problem Solving",
+      "Attention to Detail",
+      "Team Collaboration",
+      "Communication"
+    ]
+  },
+
+  "experience": [
+    {
+      "company": "TechWave Automation Pvt. Ltd.",
+      "role": "Automation QA Engineer",
+      "duration": "Jan 2023 - Present",
+      "location": "Pune, India",
+      "responsibilities": [
+        "Designed and implemented scalable automation frameworks using Java, Selenium, and TestNG.",
+        "Integrated JIRA issue tracking within Extent Reports for real-time defect linking.",
+        "Developed dynamic Excel-driven test data utilities to support multi-contract validations.",
+        "Optimized framework execution with parallel test design and reusable data layers.",
+        "Contributed to CI trigger setup and PDF result generation for test reports."
+      ]
+    },
+    {
+      "company": "InnovateX Technologies",
+      "role": "Software Engineer (Frontend & Automation)",
+      "duration": "Jun 2021 - Dec 2022",
+      "location": "Remote",
+      "responsibilities": [
+        "Developed ReactJS interfaces integrated with Firebase backend.",
+        "Built reusable Chakra UI components with responsive animations.",
+        "Created internal test dashboards and job trigger panels for automation control.",
+        "Automated report mailing and test scheduling with Java + Firebase Realtime Database."
+      ]
+    }
+  ],
+
+  "education": [
+    {
+      "degree": "Bachelor of Technology in Computer Science",
+      "institution": "Savitribai Phule Pune University",
+      "year": "2021",
+      "grade": "First Class with Distinction"
+    }
+  ],
+
+  "projects": [
+    {
+      "title": "Healthcare Contract Validation Framework",
+      "description": "Automation setup for validating healthcare contract fields (patientChargeable, clinicalSystemUse, chargeNumberReviewed) across multiple lines and Excel sheets.",
+      "techStack": ["Java", "Selenium", "TestNG", "ExtentReports"],
+      "link": "https://github.com/sachinsharma-dev/healthcare-contract-validation"
+    },
+    {
+      "title": "CI Email Scheduler (Firebase Controlled)",
+      "description": "Scheduled Java application using Firebase Realtime Database to trigger or schedule automated HTML email reports.",
+      "techStack": ["Java", "Maven", "Firebase", "HTML Templates"],
+      "link": "https://github.com/sachinsharma-dev/email-scheduler"
+    },
+    {
+      "title": "WebCraft – Website Builder",
+      "description": "React + Chakra UI drag-and-drop webpage builder allowing users to export custom HTML templates with animation and live preview.",
+      "techStack": ["ReactJS", "Chakra UI", "Framer Motion", "Firebase"],
+      "link": "https://github.com/sachinsharma-dev/webcraft"
+    },
+    {
+      "title": "Automation Reporting Dashboard",
+      "description": "ReactJS dashboard displaying live job status, execution summary, and PDF export functionality for Extent Reports.",
+      "techStack": ["React", "Firebase", "Chakra UI", "Node.js"],
+      "link": "https://github.com/sachinsharma-dev/automation-dashboard"
+    }
+  ],
+
+  "certifications": [
+    { "name": "Selenium WebDriver Advanced Automation", "year": "2023" },
+    { "name": "TestNG & Maven Framework Design", "year": "2022" },
+    { "name": "ReactJS Frontend Development", "year": "2023" },
+    { "name": "Firebase Web Integration", "year": "2024" }
+  ],
+
+  "testimonials": [
+    {
+      "name": "Sunil Mehta",
+      "role": "Senior QA Manager",
+      "feedback": "Sachin is highly dependable and brings structure to automation projects. His frameworks have greatly improved our test efficiency and defect traceability."
+    },
+    {
+      "name": "Laya Kumar",
+      "role": "Software Developer",
+      "feedback": "Collaborating with Sachin has been smooth — his frontend and backend synchronization through Firebase is both elegant and efficient."
+    }
+  ],
+
+  "hobbies": [
+    "Building UI tools and utilities",
+    "Exploring automation innovations",
+    "Learning modern web frameworks",
+    "Music & long drives"
+  ],
+
+  "availabilityStatus": {
+    "openToWork": true,
+    "preferredRoles": ["Automation QA Engineer", "Software Engineer", "React Developer"],
+    "employmentType": ["Full-time", "Remote", "Contract"]
+  },
+
+  "footer": {
+    "quote": "“Automation and design together create digital perfection.”",
+    "copyright": "© 2025 Sachin Sharma. All rights reserved."
+  }
+}

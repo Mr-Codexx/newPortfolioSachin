@@ -1,0 +1,92 @@
+{
+  "personalInfo": {
+    "name": "Sachin Sharma",
+    "title": "Senior Automation Developer | QA Engineer",
+    "phone": "+91•••••••••••",
+    "email": "sachin.sharma@example.com",
+    "linkedin": "linkedin.com/in/sachin-sharma-automation",
+    "github": "github.com/sachinsharma-dev",
+    "portfolio": "portfolio.sachinsharma.dev"
+  },
+  "summary": "Results-driven Automation Developer with 3+ years of experience in test automation, framework design, and CI/CD implementation. Specialized in Selenium, Java, ReactJS, Firebase, and modern reporting systems. Recognized for delivering scalable QA solutions that improve reliability and efficiency by 60%+ across healthcare and SaaS platforms.",
+  "coreCompetencies": [
+    "Test Automation (Selenium, TestNG, JUnit)",
+    "Java / JavaScript / Python",
+    "CI/CD (Jenkins, GitHub Actions)",
+    "ReactJS + Firebase Apps",
+    "REST API & JSON Validation",
+    "ExcelScript Automation",
+    "JIRA Integration",
+    "Performance Optimization"
+  ],
+  "technicalSkills": {
+    "languages": ["Java", "JavaScript", "TypeScript", "Python", "SQL"],
+    "automationTools": ["Selenium", "TestNG", "JUnit", "Postman", "REST-Assured"],
+    "devopsTools": ["Jenkins", "GitHub Actions", "Docker"],
+    "frontend": ["ReactJS", "Next.js", "Chakra UI", "Tailwind"],
+    "cloud": ["Firebase", "Firestore", "Realtime DB"],
+    "reports": ["Extent Reports", "PDF Export", "Email Notifications"]
+  },
+  "experience": [
+    {
+      "period": "2022 -- Present",
+      "position": "Senior Automation Developer",
+      "company": "Confidential Healthcare Organization",
+      "location": "Remote, India",
+      "responsibilities": [
+        "Designed a scalable test automation framework in Java + Selenium for healthcare contract validation",
+        "Automated multi-line validation of key fields like patientChargeable, clinicalSystemUse, and chargeNumberReviewed",
+        "Integrated Extent Reports with JIRA issue linking and PDF output for executive dashboards",
+        "Built custom Excel and JSON comparison utilities for backend validation",
+        "Implemented Java schedulers to send automated HTML email reports"
+      ],
+      "achievements": [
+        "Reduced manual validation effort by 60%+ via automation",
+        "Developed automated PDF reports linking JIRA issue references",
+        "Achieved 40% faster test cycles using parallel execution"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Automated Email Reporting System",
+      "description": "Java-based scheduler for automated HTML email reports with Firebase triggers and React frontend",
+      "technologies": ["Java", "React", "Firebase", "Chakra UI"]
+    },
+    {
+      "name": "WebCraft – Website Builder Platform",
+      "description": "React + Firebase app for end-to-end website creation with drag-drop builder",
+      "technologies": ["React", "Firebase", "Chakra UI", "Framer Motion"]
+    },
+    {
+      "name": "Excel Dashboard Automation",
+      "description": "Office Scripts for automated Excel dashboards with dynamic KPI visualizations",
+      "technologies": ["ExcelScript", "Office Automation", "JavaScript"]
+    }
+  ],
+  "education": {
+    "year": "2021",
+    "degree": "B.Tech in Computer Science",
+    "university": "XYZ University",
+    "location": "India",
+    "focus": "Automation & Software Engineering"
+  },
+  "certifications": [
+    "Advanced Selenium with Java",
+    "ReactJS + Firebase Full Stack",
+    "ExcelScript & Office Automation"
+  ],
+  "softSkills": [
+    "Analytical Thinking",
+    "Collaboration & Communication",
+    "Adaptability",
+    "Attention to Detail",
+    "Problem Solving"
+  ],
+  "interests": [
+    "Automation Framework Design",
+    "Frontend Engineering",
+    "Cloud Integration",
+    "AI-Driven Testing"
+  ]
+}
