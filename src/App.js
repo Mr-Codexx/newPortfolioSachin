@@ -16,8 +16,8 @@ import About from "./pages/About";
 const App = () => {
   return (
     <ChakraProvider>
-      {/* <MouseProvider> */}
-        {/* <MouseEffect /> */}
+      <MouseProvider>
+        <MouseEffect />
         <Router>
           <Routes>
             <Route path="/" element={<HeroSection />} />
@@ -29,7 +29,7 @@ const App = () => {
             <Route path="/projects" element={<Projects />} />
           </Routes>
         </Router>
-      {/* </MouseProvider> */}
+      </MouseProvider>
     </ChakraProvider>
   );
 };
