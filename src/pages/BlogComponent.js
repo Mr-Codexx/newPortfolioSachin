@@ -1,251 +1,327 @@
-// pages/Blog.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Container,
   VStack,
-  HStack,
-  Text,
-  Heading,
   SimpleGrid,
+  Text,
   Image,
   Badge,
-  Card,
-  CardBody,
+  HStack,
   Button,
-  Icon,
   useColorMode,
-  Avatar,
+  Icon,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Select,
+  Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { FaCalendar, FaUser, FaArrowRight, FaReadme } from "react-icons/fa";
+import { FaCalendar, FaClock, FaArrowRight, FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Data from "../data/blogs.json";
 
-const MotionCard = motion(Card);
 const MotionBox = motion(Box);
-const MotionVStack = motion(Box);
 
-const Blog = ({ primaryColor = "teal", colorMode }) => {
-  const blogPosts = [
-    {
-      title: "The Future of UI Design in 2024",
-      excerpt: "Exploring the latest trends and technologies shaping the future of user interface design.",
-      image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      category: "UI Design",
-      readTime: "5 min read",
-      date: "Dec 15, 2024",
-      author: "Lena",
-      featured: true
-    },
-    {
-      title: "Building Design Systems That Scale",
-      excerpt: "Best practices for creating and maintaining design systems that grow with your product.",
-      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      category: "Design Systems",
-      readTime: "7 min read",
-      date: "Dec 10, 2024",
-      author: "Lena",
-      featured: true
-    },
-    {
-      title: "Accessibility in Modern Web Design",
-      excerpt: "Why accessibility matters and how to implement it in your design process.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      category: "Accessibility",
-      readTime: "6 min read",
-      date: "Dec 5, 2024",
-      author: "Lena",
-      featured: false
-    },
-    {
-      title: "The Psychology of Color in Branding",
-      excerpt: "How color choices impact user perception and brand identity.",
-      image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      category: "Branding",
-      readTime: "8 min read",
-      date: "Nov 28, 2024",
-      author: "Lena",
-      featured: false
-    },
-    {
-      title: "Mobile-First Design Strategy",
-      excerpt: "Why designing for mobile first leads to better user experiences.",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      category: "Mobile Design",
-      readTime: "5 min read",
-      date: "Nov 20, 2024",
-      author: "Lena",
-      featured: false
-    },
-    {
-      title: "User Research Methods That Work",
-      excerpt: "Effective user research techniques for gathering meaningful insights.",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      category: "User Research",
-      readTime: "9 min read",
-      date: "Nov 15, 2024",
-      author: "Lena",
-      featured: false
+const Blogs = ({ primaryColor = "blue", secondaryColor = "purple" }) => {
+  const { colorMode } = useColorMode();
+  const [blogs, setBlogs] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // ✅ Load data from imported JSON (no fetch)
+  useEffect(() => {
+    setBlogs(Data.blogs);
+    setFilteredBlogs(Data.blogs);
+    setLoading(false);
+  }, []);
+
+  // ✅ Filtering logic
+  useEffect(() => {
+    let filtered = blogs;
+
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (blog) =>
+          blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+      );
     }
-  ];
+
+    // Filter by category
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(
+        (blog) => blog.category === selectedCategory
+      );
+    }
+
+    setFilteredBlogs(filtered);
+  }, [searchTerm, selectedCategory, blogs]);
+
+  const categories = ["all", ...new Set(blogs.map((blog) => blog.category))];
+
+  // ✅ Skeleton Loader
+  const BlogSkeleton = () => (
+    <Box
+      bg={colorMode === "light" ? "white" : "gray.800"}
+      borderRadius="xl"
+      overflow="hidden"
+      boxShadow="lg"
+      border="1px solid"
+      borderColor={colorMode === "light" ? "gray.200" : "gray.600"}
+    >
+      <Skeleton height="200px" />
+      <VStack spacing={4} p={6} align="start">
+        <Skeleton height="20px" width="60%" />
+        <SkeletonText mt="4" noOfLines={3} spacing="4" />
+        <Skeleton height="30px" width="40%" />
+      </VStack>
+    </Box>
+  );
 
   return (
-    <Container maxW="container.xl" py={8}>
-      <MotionVStack
-        spacing={12}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Header Section */}
-        <VStack spacing={6} textAlign="center" maxW="800px">
-          <Badge colorScheme={primaryColor} px={4} py={2} borderRadius="full" fontSize="lg">
-            My Blog
-          </Badge>
-          <Heading
-            size="2xl"
-            bgGradient={`linear(45deg, ${primaryColor}.500, blue.500)`}
-            bgClip="text"
+    <Box
+      bg={colorMode === "light" ? "white" : "gray.900"}
+      minH="100vh"
+      py={20}
+    >
+      <Container maxW="container.xl">
+        <VStack spacing={16} align="center">
+          {/* ✅ Header */}
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            textAlign="center"
           >
-            Thoughts & Insights
-          </Heading>
-          <Text fontSize="xl" color={colorMode === "light" ? "gray.600" : "gray.300"}>
-            Sharing my experiences, insights, and thoughts on design, 
-            technology, and creative processes.
-          </Text>
-        </VStack>
+            <Text
+              fontSize={{ base: "2xl", md: "4xl" }}
+              fontWeight="bold"
+              mb={4}
+              color={colorMode === "light" ? "gray.800" : "white"}
+            >
+              My Blog
+            </Text>
+            <Text
+              color={`${primaryColor}.500`}
+              fontSize="lg"
+              fontWeight="medium"
+            >
+              Thoughts and tutorials on web development
+            </Text>
+          </MotionBox>
 
-        {/* Featured Posts */}
-        <VStack spacing={8} w="100%" align="start">
-          <Heading size="lg" color={`${primaryColor}.500`}>Featured Posts</Heading>
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} w="100%">
-            {blogPosts.filter(post => post.featured).map((post, index) => (
-              <MotionCard
-                key={post.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+          {/* ✅ Search & Filter */}
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            w="100%"
+            maxW="600px"
+          >
+            <HStack spacing={4}>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <Icon as={FaSearch} color="gray.400" />
+                </InputLeftElement>
+                <Input
+                  placeholder="Search blogs..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  bg={colorMode === "light" ? "white" : "gray.800"}
+                />
+              </InputGroup>
+              <Select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
                 bg={colorMode === "light" ? "white" : "gray.800"}
-                boxShadow="xl"
-                borderRadius="2xl"
-                overflow="hidden"
-                whileHover={{ y: -5 }}
-                cursor="pointer"
+                maxW="200px"
               >
-                <CardBody p={0}>
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    w="100%"
-                    h="200px"
-                    objectFit="cover"
-                  />
-                  <VStack spacing={4} p={6} align="start">
-                    <Badge colorScheme={primaryColor} borderRadius="full" px={3}>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </option>
+                ))}
+              </Select>
+            </HStack>
+          </MotionBox>
+
+          {/* ✅ Blog Grid */}
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8} w="100%">
+            {loading ? (
+              Array.from({ length: 6 }).map((_, index) => (
+                <BlogSkeleton key={index} />
+              ))
+            ) : filteredBlogs.length > 0 ? (
+              filteredBlogs.map((post, index) => (
+                <MotionBox
+                  key={post.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  bg={colorMode === "light" ? "white" : "gray.800"}
+                  borderRadius="xl"
+                  overflow="hidden"
+                  boxShadow="lg"
+                  border="1px solid"
+                  borderColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                  _hover={{
+                    transform: "translateY(-5px)",
+                    boxShadow: "xl",
+                  }}
+                >
+                  {/* Blog Image */}
+                  <Box position="relative" overflow="hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      w="100%"
+                      h="200px"
+                      objectFit="cover"
+                      _hover={{ transform: "scale(1.05)" }}
+                      transition="transform 0.3s"
+                    />
+                    <Badge
+                      position="absolute"
+                      top={3}
+                      left={3}
+                      colorScheme={primaryColor}
+                      variant="solid"
+                      borderRadius="full"
+                      px={3}
+                    >
                       {post.category}
                     </Badge>
-                    <Heading size="md">{post.title}</Heading>
-                    <Text color={colorMode === "light" ? "gray.600" : "gray.300"}>
-                      {post.excerpt}
-                    </Text>
-                    
-                    <HStack justify="space-between" w="100%" pt={2}>
-                      <HStack spacing={4}>
-                        <HStack spacing={1}>
-                          <Icon as={FaCalendar} color="gray.500" boxSize={3} />
-                          <Text fontSize="sm" color="gray.500">{post.date}</Text>
-                        </HStack>
-                        <HStack spacing={1}>
-                          <Icon as={FaReadme} color="gray.500" boxSize={3} />
-                          <Text fontSize="sm" color="gray.500">{post.readTime}</Text>
-                        </HStack>
+                  </Box>
+
+                  {/* Blog Content */}
+                  <VStack spacing={4} p={6} align="start">
+                    {/* Meta */}
+                    <HStack
+                      spacing={4}
+                      color={colorMode === "light" ? "gray.500" : "gray.400"}
+                      fontSize="sm"
+                    >
+                      <HStack spacing={1}>
+                        <Icon as={FaCalendar} boxSize={3} />
+                        <Text>{new Date(post.date).toLocaleDateString()}</Text>
                       </HStack>
-                      <HStack spacing={2}>
-                        <Avatar size="xs" name={post.author} />
-                        <Text fontSize="sm" color="gray.500">{post.author}</Text>
+                      <HStack spacing={1}>
+                        <Icon as={FaClock} boxSize={3} />
+                        <Text>{post.readTime}</Text>
                       </HStack>
                     </HStack>
-                    
+
+                    {/* Title */}
+                    <Text
+                      fontSize="xl"
+                      fontWeight="bold"
+                      color={colorMode === "light" ? "gray.800" : "white"}
+                    >
+                      {post.title}
+                    </Text>
+
+                    {/* Excerpt */}
+                    <Text
+                      color={colorMode === "light" ? "gray.600" : "gray.400"}
+                      fontSize="sm"
+                      lineHeight="taller"
+                    >
+                      {post.excerpt}
+                    </Text>
+
+                    {/* Tags */}
+                    <HStack spacing={2} flexWrap="wrap">
+                      {post.tags.slice(0, 3).map((tag, i) => (
+                        <Badge
+                          key={i}
+                          colorScheme={secondaryColor}
+                          variant="subtle"
+                          fontSize="xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </HStack>
+
+                    {/* Stats */}
+                    <HStack
+                      spacing={4}
+                      fontSize="sm"
+                      color={colorMode === "light" ? "gray.500" : "gray.400"}
+                    >
+                      <Text>❤️ {post.likes} likes</Text>
+                      <Text>💬 {post.comments.length} comments</Text>
+                    </HStack>
+
+                    {/* Read More */}
                     <Button
-                      rightIcon={<FaArrowRight />}
+                      as={Link}
+                      to={`/blog/${post.id}`}
                       variant="ghost"
                       colorScheme={primaryColor}
                       size="sm"
-                      mt={2}
+                      rightIcon={<FaArrowRight />}
+                      _hover={{
+                        transform: "translateX(5px)",
+                      }}
+                      transition="all 0.2s"
                     >
                       Read More
                     </Button>
                   </VStack>
-                </CardBody>
-              </MotionCard>
-            ))}
-          </SimpleGrid>
-        </VStack>
-
-        {/* All Posts */}
-        <VStack spacing={8} w="100%" align="start">
-          <Heading size="lg" color={`${primaryColor}.500`}>All Posts</Heading>
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} w="100%">
-            {blogPosts.filter(post => !post.featured).map((post, index) => (
-              <MotionCard
-                key={post.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                bg={colorMode === "light" ? "white" : "gray.800"}
-                boxShadow="md"
-                borderRadius="xl"
-                overflow="hidden"
-                whileHover={{ y: -3 }}
-                cursor="pointer"
+                </MotionBox>
+              ))
+            ) : (
+              <Box
+                gridColumn={{ base: "1", md: "1 / -1" }}
+                textAlign="center"
+                py={10}
               >
-                <CardBody>
-                  <VStack spacing={3} align="start">
-                    <Badge colorScheme={primaryColor} borderRadius="full" px={2}>
-                      {post.category}
-                    </Badge>
-                    <Heading size="sm">{post.title}</Heading>
-                    <Text fontSize="sm" color={colorMode === "light" ? "gray.600" : "gray.300"}>
-                      {post.excerpt}
-                    </Text>
-                    
-                    <HStack justify="space-between" w="100%" pt={2}>
-                      <Text fontSize="xs" color="gray.500">{post.date}</Text>
-                      <Text fontSize="xs" color="gray.500">{post.readTime}</Text>
-                    </HStack>
-                  </VStack>
-                </CardBody>
-              </MotionCard>
-            ))}
-          </SimpleGrid>
-        </VStack>
-
-        {/* Newsletter CTA */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          textAlign="center"
-          w="100%"
-        >
-          <Card bg={colorMode === "light" ? `${primaryColor}.50` : `${primaryColor}.900`} borderRadius="2xl">
-            <CardBody py={8}>
-              <VStack spacing={4}>
-                <Heading size="lg">Stay Updated</Heading>
-                <Text color={colorMode === "light" ? "gray.600" : "gray.300"}>
-                  Get the latest articles and design resources delivered to your inbox.
+                <Text
+                  fontSize="xl"
+                  color={colorMode === "light" ? "gray.600" : "gray.400"}
+                >
+                  No blogs found matching your criteria.
                 </Text>
-                <HStack spacing={3} w="100%" maxW="400px">
-                  <Button colorScheme={primaryColor} flex={1}>
-                    Subscribe
-                  </Button>
-                </HStack>
-              </VStack>
-            </CardBody>
-          </Card>
-        </MotionBox>
-      </MotionVStack>
-    </Container>
+              </Box>
+            )}
+          </SimpleGrid>
+
+          {/* ✅ Load More Button (optional) */}
+          {!loading && filteredBlogs.length > 0 && (
+            <MotionBox
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <Button
+                colorScheme={primaryColor}
+                size="lg"
+                variant="outline"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  bg: `${primaryColor}.500`,
+                  color: "white",
+                }}
+                transition="all 0.2s"
+              >
+                Load More Posts
+              </Button>
+            </MotionBox>
+          )}
+        </VStack>
+      </Container>
+    </Box>
   );
 };
 
-export default Blog;
+export default Blogs;

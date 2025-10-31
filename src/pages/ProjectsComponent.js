@@ -1,129 +1,137 @@
-// pages/Projects.js
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Container,
   VStack,
-  HStack,
-  Text,
-  Heading,
   SimpleGrid,
+  Text,
   Image,
   Badge,
-  Card,
-  CardBody,
+  HStack,
   Button,
-  Icon,
   useColorMode,
-  Tag,
+  Icon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt, FaGithub, FaEye } from "react-icons/fa";
 
-const MotionCard = motion(Card);
 const MotionBox = motion(Box);
-const MotionVStack = motion(Box);
 
-const Projects = ({ primaryColor = "teal", colorMode }) => {
+const Projects = ({ primaryColor, secondaryColor, accentColor }) => {
+  const { colorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const projects = [
     {
-      title: "E-Commerce Platform Redesign",
-      description: "Complete redesign of a modern e-commerce platform focusing on user experience and conversion optimization.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      tags: ["UI/UX Design", "Web Design", "E-commerce"],
+      id: 1,
+      title: "E-Commerce Platform",
+      description: "A full-stack e-commerce solution with React and Node.js",
+      image: "/api/placeholder/400/250",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
       liveUrl: "#",
       githubUrl: "#",
-      featured: true
+      category: "Full Stack"
     },
     {
-      title: "Mobile Banking App",
-      description: "Intuitive mobile banking application with focus on security and user-friendly interface.",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      tags: ["Mobile Design", "Fintech", "UI/UX"],
+      id: 2,
+      title: "Task Management App",
+      description: "A collaborative task management application",
+      image: "/api/placeholder/400/250",
+      technologies: ["Vue.js", "Firebase", "Tailwind CSS"],
       liveUrl: "#",
       githubUrl: "#",
-      featured: true
+      category: "Frontend"
     },
     {
-      title: "Healthcare Dashboard",
-      description: "Comprehensive dashboard for healthcare providers to manage patient data and appointments.",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      tags: ["Dashboard", "Healthcare", "Data Visualization"],
+      id: 3,
+      title: "Weather Dashboard",
+      description: "Real-time weather information dashboard",
+      image: "/api/placeholder/400/250",
+      technologies: ["React", "API", "Chart.js"],
       liveUrl: "#",
       githubUrl: "#",
-      featured: false
+      category: "Frontend"
     },
     {
-      title: "Travel Booking Platform",
-      description: "Modern travel booking platform with seamless user experience and beautiful visual design.",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      tags: ["Web Design", "Travel", "Booking System"],
+      id: 4,
+      title: "Social Media API",
+      description: "REST API for social media platform",
+      image: "/api/placeholder/400/250",
+      technologies: ["Express", "MongoDB", "JWT"],
       liveUrl: "#",
       githubUrl: "#",
-      featured: false
-    },
-    {
-      title: "Fitness Tracking App",
-      description: "Mobile application for fitness tracking with social features and progress analytics.",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      tags: ["Mobile App", "Fitness", "Analytics"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
-    },
-    {
-      title: "Brand Identity Package",
-      description: "Complete brand identity design including logo, typography, and brand guidelines.",
-      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      tags: ["Branding", "Logo Design", "Visual Identity"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
+      category: "Backend"
     }
   ];
 
-  return (
-    <Container maxW="container.xl" py={8}>
-      <MotionVStack
-        spacing={12}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Header Section */}
-        <VStack spacing={6} textAlign="center" maxW="800px">
-          <Badge colorScheme={primaryColor} px={4} py={2} borderRadius="full" fontSize="lg">
-            My Work
-          </Badge>
-          <Heading
-            size="2xl"
-            bgGradient={`linear(45deg, ${primaryColor}.500, blue.500)`}
-            bgClip="text"
-          >
-            Featured Projects
-          </Heading>
-          <Text fontSize="xl" color={colorMode === "light" ? "gray.600" : "gray.300"}>
-            A collection of my recent work that showcases my design process 
-            and problem-solving approach.
-          </Text>
-        </VStack>
+  const openProjectModal = (project) => {
+    setSelectedProject(project);
+    onOpen();
+  };
 
-        {/* Projects Grid */}
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8} w="100%">
-          {projects.map((project, index) => (
-            <MotionCard
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              bg={colorMode === "light" ? "white" : "gray.800"}
-              boxShadow="xl"
-              borderRadius="2xl"
-              overflow="hidden"
-              whileHover={{ y: -5 }}
-              cursor="pointer"
+  return (
+    <Box
+      bg={colorMode === "light" ? "white" : "gray.900"}
+      minH="100vh"
+      py={20}
+    >
+      <Container maxW="container.xl">
+        <VStack spacing={16} align="center">
+          {/* Header */}
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            textAlign="center"
+          >
+            <Text
+              fontSize={{ base: "2xl", md: "4xl" }}
+              fontWeight="bold"
+              mb={4}
+              color={colorMode === "light" ? "gray.800" : "white"}
             >
-              <CardBody p={0}>
+              My Projects
+            </Text>
+            <Text
+              color={`${primaryColor}.500`}
+              fontSize="lg"
+              fontWeight="medium"
+            >
+              Some of my recent work
+            </Text>
+          </MotionBox>
+
+          <SimpleGrid
+            columns={{ base: 1, md: 2, lg: 3 }}
+            spacing={8}
+            w="100%"
+          >
+            {projects.map((project, index) => (
+              <MotionBox
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                bg={colorMode === "light" ? "white" : "gray.800"}
+                borderRadius="xl"
+                overflow="hidden"
+                boxShadow="lg"
+                border="1px solid"
+                borderColor={colorMode === "light" ? "gray.200" : "gray.600"}
+                _hover={{
+                  transform: "translateY(-5px)",
+                  boxShadow: "xl"
+                }}
+                // transition="all 0.3s"
+              >
                 {/* Project Image */}
                 <Box position="relative" overflow="hidden">
                   <Image
@@ -132,105 +140,130 @@ const Projects = ({ primaryColor = "teal", colorMode }) => {
                     w="100%"
                     h="200px"
                     objectFit="cover"
+                    _hover={{ transform: "scale(1.05)" }}
                     transition="transform 0.3s"
-                    _groupHover={{ transform: "scale(1.1)" }}
                   />
-                  {project.featured && (
-                    <Badge
-                      position="absolute"
-                      top={3}
-                      left={3}
-                      colorScheme={primaryColor}
-                      borderRadius="full"
-                      px={3}
-                      py={1}
-                    >
-                      Featured
-                    </Badge>
-                  )}
-                  
-                  {/* Overlay */}
-                  <Box
+                  <Badge
                     position="absolute"
-                    top={0}
-                    left={0}
-                    right={0}
-                    bottom={0}
-                    bg="blackAlpha.600"
-                    opacity={0}
-                    transition="opacity 0.3s"
-                    _hover={{ opacity: 1 }}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
+                    top={3}
+                    left={3}
+                    colorScheme={primaryColor}
+                    variant="solid"
+                    borderRadius="full"
+                    px={3}
                   >
-                    <HStack spacing={4}>
-                      <Button
-                        leftIcon={<FaEye />}
-                        colorScheme={primaryColor}
-                        size="sm"
-                      >
-                        View
-                      </Button>
-                      <Button
-                        leftIcon={<FaExternalLinkAlt />}
-                        variant="outline"
-                        color="white"
-                        borderColor="white"
-                        size="sm"
-                        _hover={{ bg: "whiteAlpha.200" }}
-                      >
-                        Live
-                      </Button>
-                    </HStack>
-                  </Box>
+                    {project.category}
+                  </Badge>
                 </Box>
 
-                {/* Project Info */}
+                {/* Project Content */}
                 <VStack spacing={4} p={6} align="start">
-                  <Heading size="md">{project.title}</Heading>
-                  <Text color={colorMode === "light" ? "gray.600" : "gray.300"} fontSize="sm">
+                  <Text
+                    fontSize="xl"
+                    fontWeight="bold"
+                    color={colorMode === "light" ? "gray.800" : "white"}
+                  >
+                    {project.title}
+                  </Text>
+                  <Text
+                    color={colorMode === "light" ? "gray.600" : "gray.400"}
+                    fontSize="sm"
+                    lineHeight="taller"
+                  >
                     {project.description}
                   </Text>
-                  
-                  {/* Tags */}
+
+                  {/* Technologies */}
                   <HStack spacing={2} flexWrap="wrap">
-                    {project.tags.map((tag) => (
-                      <Tag
-                        key={tag}
-                        size="sm"
-                        colorScheme={primaryColor}
+                    {project.technologies.map((tech, techIndex) => (
+                      <Badge
+                        key={techIndex}
+                        colorScheme={secondaryColor}
                         variant="subtle"
-                        borderRadius="full"
+                        fontSize="xs"
                       >
-                        {tag}
-                      </Tag>
+                        {tech}
+                      </Badge>
                     ))}
                   </HStack>
-                </VStack>
-              </CardBody>
-            </MotionCard>
-          ))}
-        </SimpleGrid>
 
-        {/* Call to Action */}
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          textAlign="center"
+                  {/* Action Buttons */}
+                  <HStack spacing={3} w="100%" justify="space-between">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      colorScheme={primaryColor}
+                      leftIcon={<FaGithub />}
+                      onClick={() => window.open(project.githubUrl, '_blank')}
+                    >
+                      Code
+                    </Button>
+                    <Button
+                      size="sm"
+                      colorScheme={primaryColor}
+                      rightIcon={<FaExternalLinkAlt />}
+                      onClick={() => window.open(project.liveUrl, '_blank')}
+                    >
+                      Live Demo
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      colorScheme={accentColor}
+                      leftIcon={<FaEye />}
+                      onClick={() => openProjectModal(project)}
+                    >
+                      View
+                    </Button>
+                  </HStack>
+                </VStack>
+              </MotionBox>
+            ))}
+          </SimpleGrid>
+        </VStack>
+      </Container>
+
+      {/* Project Detail Modal */}
+      <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+        <ModalOverlay />
+        <ModalContent
+          bg={colorMode === "light" ? "white" : "gray.800"}
+          border="1px solid"
+          borderColor={colorMode === "light" ? "gray.200" : "gray.600"}
         >
-          <Button
-            colorScheme={primaryColor}
-            size="lg"
-            rightIcon={<FaExternalLinkAlt />}
-            px={8}
-          >
-            View All Projects
-          </Button>
-        </MotionBox>
-      </MotionVStack>
-    </Container>
+          <ModalHeader>
+            {selectedProject?.title}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            {selectedProject && (
+              <VStack spacing={4} align="start">
+                <Image
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  w="100%"
+                  borderRadius="md"
+                />
+                <Text color={colorMode === "light" ? "gray.600" : "gray.400"}>
+                  {selectedProject.description}
+                </Text>
+                <HStack spacing={2} flexWrap="wrap">
+                  {selectedProject.technologies.map((tech, index) => (
+                    <Badge
+                      key={index}
+                      colorScheme={primaryColor}
+                      variant="subtle"
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
+                </HStack>
+              </VStack>
+            )}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Box>
   );
 };
 

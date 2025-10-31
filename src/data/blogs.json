@@ -1,0 +1,40 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "Getting Started with React Hooks",
+      "excerpt": "Learn how to use React Hooks to simplify your functional components and manage state effectively.",
+      "content": "React Hooks have revolutionized the way we write React components... [full content]",
+      "image": "/api/placeholder/400/250",
+      "category": "React",
+      "date": "2023-12-15",
+      "readTime": "5 min read",
+      "author": "John Doe",
+      "tags": ["React", "Hooks", "JavaScript"],
+      "likes": 24,
+      "comments": [
+        {
+          "id": 1,
+          "user": "Jane Smith",
+          "comment": "Great tutorial! Very helpful for beginners.",
+          "date": "2023-12-16",
+          "avatar": "/api/placeholder/40/40"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Modern CSS Techniques for 2024",
+      "excerpt": "Explore the latest CSS features and techniques that will transform your web development workflow.",
+      "content": "CSS has evolved significantly over the years... [full content]",
+      "image": "/api/placeholder/400/250",
+      "category": "CSS",
+      "date": "2023-12-10",
+      "readTime": "8 min read",
+      "author": "John Doe",
+      "tags": ["CSS", "Frontend", "Design"],
+      "likes": 18,
+      "comments": []
+    }
+  ]
+}
